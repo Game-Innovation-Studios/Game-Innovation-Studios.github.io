@@ -18,3 +18,9 @@ registerRoute(
   ({request}) => request.destination === 'style',
   new NetworkFirst()
 );
+
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    console.log("Yes");
+  );
+});
