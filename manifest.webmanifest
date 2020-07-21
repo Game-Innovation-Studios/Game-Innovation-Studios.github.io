@@ -4,8 +4,7 @@
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",
-  "Scope": "/",
-  "start_url": "/index.html",
+  "start_url": "index.html",
   "icons": [
     {
       "src": "png/logo_72.png",
@@ -58,7 +57,6 @@
       "type": "image/png"
     }
   ],
-  "splash_pages": null,
   "theme_color": "#3399FF",
   "background_color": "#3399FF"
 }
