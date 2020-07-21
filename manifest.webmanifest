@@ -58,5 +58,7 @@
       "type": "image/png"
     }
   ],
-  "splash_pages": null
+  "splash_pages": null,
+  "theme_color": "#3399FF",
+  "background_color": "#3399FF"
 }
