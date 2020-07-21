@@ -1,0 +1,12 @@
+{
+  "name": "reInnovate Games",
+  "short_name": "reInnovate",
+  "icons": [{
+    "src": "svg/logo.svg",
+    "sizes": "72x72 96x96 128x128 144x144 192x192 256x256 512x512"
+  }],
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1e87f0",
+  "theme_color": "#1e87f0"
+}
