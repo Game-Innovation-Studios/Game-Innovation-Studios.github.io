@@ -1,23 +1,17 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+// CODELAB: Add list of files to cache here.
+const FILES_TO_CACHE = [
+  '/offline.html',
+];
 
-if (workbox) {
-  console.log(`Yay! Workbox is loaded 🎉`);
-} else {
-  console.log(`Boo! Workbox didn't load 😬`);
-}
-
-import {registerRoute} from 'workbox-routing';
-import {NetworkFirst} from 'workbox-strategies';
-
-registerRoute(
-  ({request}) => request.destination === 'script',
-  new NetworkFirst()
+// CODELAB: Precache static resources here.
+evt.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('[ServiceWorker] Pre-caching offline page');
+      return cache.addAll(FILES_TO_CACHE);
+    })
 );
 
-registerRoute(
-  ({request}) => request.destination === 'style',
-  new NetworkFirst()
-);
+
 
 self.addEventListener('fetch', (event) => {
   event.respondWith(
