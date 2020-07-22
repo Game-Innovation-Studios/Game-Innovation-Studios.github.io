@@ -15,6 +15,6 @@ evt.waitUntil(
 
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    console.log("Yes");
+    console.log('Yes');
   );
 });
