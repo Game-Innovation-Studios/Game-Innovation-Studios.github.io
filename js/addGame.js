@@ -8,15 +8,15 @@ function flasher(url, width, height) {
 
 function framer(url, width, height) {
   var game = document.getElementById("game")
-  game.innerHTML = '<iframe src="' + url + '" width="" height="" style="display: block; margin: auto; margin-top: 20px; width: ' + width.toString() + 'px; height: ' + height.toString() + 'px;">'
+  game.innerHTML = '<iframe src="' + url + '" style="display: block; margin: auto; margin-top: 20px; width: ' + width.toString() + 'px; height: ' + height.toString() + 'px;">'
+}
 
 
-
-
+function scratch(id) {
+  var game = document.getElementById("game")
+  game.innerHTML = '<iframe src="https://forkphorus.github.io/embed.html?id=' + id.toString() + '&auto-start=true&light-content=true" width="802" height="633" style="display: block; margin: auto; margin-top: 20px;" allowfullscreen="true" allowtransparency="true" style="border:none;"></iframe>'
 }
 
 window.addEventListener('load', (event) => {
-  setTimeout(function() {
   eval(ggDecode(game))
-  }, 1000);
 });
