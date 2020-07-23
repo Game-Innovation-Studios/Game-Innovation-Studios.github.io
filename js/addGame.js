@@ -7,13 +7,16 @@ function flasher(url, width, height) {
 }
 
 function framer(url, width, height) {
-  setTimeout(function() {
-  //your code to be executed after 1 second
-}, 1000);
+  var game = document.getElementById("game")
+  game.innerHTML = '<iframe src="' + url + '" width="" height="" style="display: block; margin: auto; margin-top: 20px; width: ' + width.toString() + 'px; height: ' + height.toString() + 'px;">'
+
+
 
 
 }
 
 window.addEventListener('load', (event) => {
+  setTimeout(function() {
   eval(ggDecode(game))
+  }, 1000);
 });
