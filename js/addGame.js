@@ -6,7 +6,7 @@ function flasher(url, width, height) {
 }
 
 function framer(url, width, height) {
-  document.getElementById("game").innerHTML = '<iframe src="' + url + '" width="" height="" style="display: block; margin: auto; margin-top: 20px; width: ' + width.toString() + 'px; height: ' + height.toString() ) + 'px;">'
+  document.getElementById("game").innerHTML = '<iframe src="' + url + '" width="" height="" style="display: block; margin: auto; margin-top: 20px; width: ' + width.toString() + 'px; height: ' + height.toString() + 'px;">'
 }
 
 
