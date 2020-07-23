@@ -1,23 +1,4 @@
-(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-var hexagramEncode = require("hexagram-encode");
-var Buffer = require('buffer/').Buffer
-
-var ggDecoded;
-var ggEncoded;
-
-window.ggEncode = function(game) {
-  var ggBuf = new Buffer.from(game);
-  var ggEncoded = hexagramEncode.encode(ggBuf);
-  return(ggEncoded);
-}
-
-window.ggDecode = function(encoded) {
-   var ggBuf = hexagramEncode.decode(encoded);
-   var ggDecoded = ggBuf.toString();
-   return(ggDecoded);
-}
-
-},{"buffer/":3,"hexagram-encode":4}],2:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.buffer = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -171,7 +152,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],3:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 (function (Buffer){
 /*!
  * The buffer module from node.js, for the browser.
@@ -1969,51 +1950,7 @@ var hexSliceLookupTable = (function () {
 })()
 
 }).call(this,require("buffer").Buffer)
-},{"base64-js":2,"buffer":7,"ieee754":5}],4:[function(require,module,exports){
-(function (Buffer){
-/** Convert binary data to/from I Ching hexagrams such that the binary is visible */
-
-// 64 Base64 characters in order, 65th character is padding symbol
-var base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-
-// 64 I Ching hexagrams in order, 65th character is yin/yang symbol.
-// To see these, suggested font is Segoe UI Symbol. Note that the "binary" order
-// here bears no particular relation to the order of code points in Unicode.
-var hexagrams = "䷁䷗䷆䷒䷎䷣䷭䷊䷏䷲䷧䷵䷽䷶䷟䷡䷇䷂䷜䷻䷦䷾䷯䷄䷬䷐䷮䷹䷞䷰䷛䷪䷖䷚䷃䷨䷳䷕䷑䷙䷢䷔䷿䷥䷷䷝䷱䷍䷓䷩䷺䷼䷴䷤䷸䷈䷋䷘䷅䷉䷠䷌䷫䷀☯";
-
-var encode = {};
-var decode = {};
-base64 = base64.split("");
-hexagrams = hexagrams.split("");
-for(var i = 0; i <= 65; i++) {
-	var base64c = base64[i];
-	var hexagram = hexagrams[i];
-	encode[base64c] = hexagram;
-	decode[hexagram] = base64c;
-}
-
-module.exports = {
-
-	/** Encode binary data as I Ching hexagrams */
-	encode: function(buf) {
-		return buf.toString("base64").split("").map(function(base64c) {
-			return encode[base64c];
-		}).join("");
-	},
-
-	/** Decode I Ching hexagrams to binary data */
-	decode: function(str) {
-		return new Buffer(str.split("").map(function(hexagram) {
-			if(!(hexagram in decode)) {
-				throw new Error("Unrecognised hexagram: " + hexagram);
-			}
-			return decode[hexagram];
-		}).join(""), "base64");
-	}
-};
-
-}).call(this,require("buffer").Buffer)
-},{"buffer":7}],5:[function(require,module,exports){
+},{"base64-js":1,"buffer":5,"ieee754":3}],3:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -2099,9 +2036,9 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],6:[function(require,module,exports){
-arguments[4][2][0].apply(exports,arguments)
-},{"dup":2}],7:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
+arguments[4][1][0].apply(exports,arguments)
+},{"dup":1}],5:[function(require,module,exports){
 (function (Buffer){
 /*!
  * The buffer module from node.js, for the browser.
@@ -3882,6 +3819,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"base64-js":6,"buffer":7,"ieee754":8}],8:[function(require,module,exports){
-arguments[4][5][0].apply(exports,arguments)
-},{"dup":5}]},{},[1]);
+},{"base64-js":4,"buffer":5,"ieee754":6}],6:[function(require,module,exports){
+arguments[4][3][0].apply(exports,arguments)
+},{"dup":3}]},{},[2])(2)
+});
