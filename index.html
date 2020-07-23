@@ -8,11 +8,23 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="theme-color" content="#1e87f0" />
 
+      <script src="/js/install.js"></script>
       <link rel="manifest" href="/manifest.webmanifest">
       <meta name="apple-mobile-web-app-capable" content="yes">
       <meta name="apple-mobile-web-app-status-bar-style" content="default">
       <meta name="apple-mobile-web-app-title" content="reInnovate Games">
       <link rel="apple-touch-icon" href="/svg/logo.svg">
+      <script>
+      // CODELAB: Register service worker.
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then((reg) => {
+                  console.log('Service worker registered.', reg);
+                });
+            });
+        }
+      </script>
 
       <link rel="stylesheet" href="/css/uikit.min.css" />
       <script src="/js/uikit.min.js"></script>
@@ -27,7 +39,6 @@
         }
       </style>
 
-      <script src="/js/install.js"></script>
   </head>
 
   <body class="uk-background-secondary uk-light">
@@ -58,17 +69,7 @@
     <p><h1 class="uk-heading-medium uk-text-center">Welcome to reInnovate Games</h1></p>
 
 
-    <script>
-    // CODELAB: Register service worker.
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js')
-              .then((reg) => {
-                console.log('Service worker registered.', reg);
-              });
-          });
-      }
-    </script>
+
   </body>
 
 </html>
