@@ -11,9 +11,9 @@
         output.innerHTML = ggEncode(EncodeV);
       }
       function hgDecode(){
-        var EncodeV = document.getElementById("Encode").value.toString();
+        var DecodeV = document.getElementById("Decode").value.toString();
         var output = document.getElementById("output");
-        output.innerHTML = ggEncode(EncodeV);
+        output.innerHTML = ggDecode(DecodeV);
       }
     </script>
   </head>
@@ -24,7 +24,7 @@
     <input type="text" id="Encode" width=300>
     <input type="submit" value="Submit" onclick="hgEncode()"><br>
     <label for="id">Decode:</label>
-    <input type="text" id="Encode" width=300>
+    <input type="text" id="Decode" width=300>
     <input type="submit" value="Submit" onclick="hgDecode()"><br>
 
     <textarea id="output" style="right: 0px; top: 0px;"></textarea>
