@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Convert to Hexagram</title>
+    <script src="js/gameGram.js"></script>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+      function hgEncode(){
+        var EncodeV = document.getElementById("Encode").value.toString();
+        var output = document.getElementById("output");
+        output.innerHTML = ggEncode(EncodeV);
+      }
+      function hgDecode(){
+        var EncodeV = document.getElementById("Encode").value.toString();
+        var output = document.getElementById("output");
+        output.innerHTML = ggEncode(EncodeV);
+      }
+    </script>
+  </head>
+  <body>
+
+
+    <label for="id">Encode:</label>
+    <input type="text" id="Encode" width=300>
+    <input type="submit" value="Submit" onclick="hgEncode()"><br>
+    <label for="id">Decode:</label>
+    <input type="text" id="Encode" width=300>
+    <input type="submit" value="Submit" onclick="hgDecode()"><br>
+
+    <textarea id="output" style="right: 0px; top: 0px;"></textarea>
+  </body>
+</html>

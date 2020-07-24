@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Make a Game Gram</title>
+    <script src="js/gameGram.js"></script>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+
+
+      function gameGramFlash(){
+        var url = document.getElementById("urlfl").value.toString();
+        var width = document.getElementById("widthfl").value.toString();
+        var height = document.getElementById("heightfl").value.toString();
+        var output = document.getElementById("output");
+        output.innerHTML = ggEncode("flasher('" + url + "', " + width + ", " + height + ");");
+      }
+      function gameGramFrame(){
+        var url = document.getElementById("urlfr").value.toString();
+        var width = document.getElementById("widthfr").value.toString();
+        var height = document.getElementById("heightfr").value.toString();
+        var output = document.getElementById("output");
+        output.innerHTML = ggEncode("flasher('" + url + "', " + width + ", " + height + ");");
+      }
+      function gameGramScratch(){
+        var id = document.getElementById("id").value.toString();
+        var output = document.getElementById("output");
+        outputval.innerHTML = ggEncode("scratch(" + id + ");");
+      }
+      function gameGramJS(){
+        var jsi = document.getElementById("JS").value.toString();
+        var output = document.getElementById("output");
+        output.innerHTML = ggEncode(jsi);
+      }
+    </script>
+  </head>
+  <body>
+    <label for="url">SWF URL (Don't use relative links like swf/game.swf use https://game-innovation-studios.github.io/swf/game.swf):</label>
+    <input type="text" id="urlfl" width=300><br>
+    <label for="width">Width (800 x 533 (3:2)  or 800 x 600 (4:3)  800 x 450 (16:9) Just try to keep the width as 800):</label>
+    <input type="text" id="widthfl" width=300><br>
+    <label for="height">Height (Refer to above for height):</label>
+    <input type="text" id="heightfl" width=300>
+    <input type="submit" value="Submit" onclick="gameGramFlash()"><br><br><br>
+
+
+
+
+    <label for="url">SWF URL (Don't use relative links like swf/game.swf use https://game-innovation-studios.github.io/swf/game.swf):</label>
+    <input type="text" id="urlfr" width=300><br>
+    <label for="width">Width (800 x 533 (3:2)  or 800 x 600 (4:3)  800 x 450 (16:9) Just try to keep the width as 800):</label>
+    <input type="text" id="widthfr" width=300><br>
+    <label for="height">Height (Refer to above for height):</label>
+    <input type="text" id="heightfr" width=300>
+    <input type="submit" value="Submit" onclick="gameGramFrame()"><br><br><br>
+
+
+
+
+    <label for="id">Flash id(e.g. 46587498):</label>
+    <input type="text" id="id" width=300>
+    <input type="submit" value="Submit" onclick="gameGramScratch()"><br>
+
+    <label for="id">Plain JS:</label>
+    <input type="text" id="JS" width=300>
+    <input type="submit" value="Submit" onclick="gameGramJS()"><br>
+
+    <textarea id="output" style="right: 0px; top: 0px;"></textarea>
+  </body>
+</html>
