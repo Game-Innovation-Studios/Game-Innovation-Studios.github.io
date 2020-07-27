@@ -19,7 +19,7 @@
         var width = document.getElementById("widthfr").value.toString();
         var height = document.getElementById("heightfr").value.toString();
         var output = document.getElementById("output");
-        output.innerHTML = ggEncode("flasher('" + url + "', " + width + ", " + height + ");");
+        output.innerHTML = ggEncode("framer('" + url + "', " + width + ", " + height + ");");
       }
       function gameGramScratch(){
         var id = document.getElementById("id").value.toString();
@@ -45,7 +45,7 @@
 
 
 
-    <label for="url">SWF URL (Don't use relative links like swf/game.swf use https://game-innovation-studios.github.io/swf/game.swf):</label>
+    <label for="url">Frame embed html file (Don't use relative links like html/game.html use https://game-innovation-studios.github.io/html/game.html):</label>
     <input type="text" id="urlfr" width=300><br>
     <label for="width">Width (800 x 533 (3:2)  or 800 x 600 (4:3)  800 x 450 (16:9) Just try to keep the width as 800):</label>
     <input type="text" id="widthfr" width=300><br>

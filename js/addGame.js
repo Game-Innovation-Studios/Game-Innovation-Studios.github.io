@@ -1,5 +1,6 @@
 var params = new URLSearchParams(document.location.search.substring(1));
 var game = params.get("game");
+var title = params.get("title");
 
 function flasher(url, width, height) {
   var game = document.getElementById("game")
@@ -8,7 +9,7 @@ function flasher(url, width, height) {
 
 function framer(url, width, height) {
   var game = document.getElementById("game")
-  game.innerHTML = '<iframe src="' + url + '" style="display: block; margin: auto; margin-top: 20px; width: ' + width.toString() + 'px; height: ' + height.toString() + 'px;">'
+  game.innerHTML = '<iframe src="' + url + '" style="display: block; margin: auto; margin-top: 20px; width: ' + width. + '; height: ' + height + ';">'
 }
 
 
@@ -19,4 +20,10 @@ function scratch(id) {
 
 window.addEventListener('load', (event) => {
   eval(ggDecode(game))
+
+  if(title == null){
+    document.title = "reInnovate Games";
+  } else {
+    document.title = title + " | reInnovate Games";
+  }
 });
