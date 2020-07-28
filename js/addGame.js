@@ -9,9 +9,13 @@ function flasher(url, width, height) {
 
 function framer(url, width, height) {
   var game = document.getElementById("game")
-  game.innerHTML = '<iframe src="' + url + '" style="display: block; margin: auto; margin-top: 20px; width: ' + width. + '; height: ' + height + ';">'
+  game.innerHTML = '<iframe src="' + url + '" style="display: block; margin: auto; margin-top: 20px; width: ' + width.toString() + 'px; height: ' + height.toString() + 'px; border: none;">'
 }
 
+function framerFull(url) {
+  var game = document.getElementById("game")
+  game.innerHTML = '<iframe src="' + url + '" style="display: block; margin: auto; margin-top: 20px; width: calc(100vw - 40px); height: calc(100vh - 104px); border: none;">'
+}
 
 function scratch(id) {
   var game = document.getElementById("game")
