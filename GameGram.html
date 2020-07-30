@@ -5,7 +5,22 @@
     <script src="js/gameGram.js"></script>
     <meta charset="utf-8"/>
     <script type="text/javascript">
-
+      function copyStringToClipboard(str) {
+         // Create new element
+         var el = document.createElement('textarea');
+         // Set value (string to be copied)
+         el.value = str;
+         // Set non-editable to avoid focus and move outside of view
+         el.setAttribute('readonly', '');
+         el.style = {position: 'absolute', left: '-9999px'};
+         document.body.appendChild(el);
+         // Select text inside element
+         el.select();
+         // Copy text to clipboard
+         document.execCommand('copy');
+         // Remove temporary element
+         document.body.removeChild(el);
+      }
 
       function gameGramFlash(){
         var url = document.getElementById("urlfl").value.toString();
@@ -13,6 +28,7 @@
         var height = document.getElementById("heightfl").value.toString();
         var output = document.getElementById("output");
         output.innerHTML = ggEncode("flasher('" + url + "', " + width + ", " + height + ");");
+        copyStringToClipboard(ggEncode("flasher('" + url + "', " + width + ", " + height + ");"));
       }
       function gameGramFrame(){
         var url = document.getElementById("urlfr").value.toString();
@@ -20,29 +36,33 @@
         var height = document.getElementById("heightfr").value.toString();
         var output = document.getElementById("output");
         output.innerHTML = ggEncode("framer('" + url + "', " + width + ", " + height + ");");
+        copyStringToClipboard(ggEncode("framer('" + url + "', " + width + ", " + height + ");"));
       }
       function gameGramFrameFull(){
         var url = document.getElementById("urlfrf").value.toString();
         var output = document.getElementById("output");
         output.innerHTML = ggEncode("framerFull('" + url + "');");
+        copyStringToClipboard(ggEncode("framerFull('" + url + "');"));
       }
       function gameGramScratch(){
         var id = document.getElementById("id").value.toString();
         var output = document.getElementById("output");
         output.innerHTML = ggEncode("scratch(" + id + ");");
+        copyStringToClipboard(ggEncode("scratch(" + id + ");"));
       }
       function gameGramJS(){
         var jsi = document.getElementById("JS").value.toString();
         var output = document.getElementById("output");
         output.innerHTML = ggEncode(jsi);
+        copyStringToClipboard(ggEncode(jsi));
       }
     </script>
   </head>
   <body>
     <p>Flash Game With Specified Width & Height:</p>
     <label for="url">SWF URL (Don't use relative links like swf/game.swf use https://game-innovation-studios.github.io/swf/game.swf):</label>
-    <input type="text" id="urlfl" width=300><br>
-    <label for="width">Width (800 x 533 (3:2)  or 800 x 600 (4:3)  800 x 450 (16:9) Just try to keep the width as 800):</label>
+    <input type="text" id="urlfl" style="width: 450px;"><br>
+    <label for="width">Width (800 x 533 (3:2)  or 800 x 600 (4:3)  or 800 x 450 (16:9) or 800 x 667 (6:5)  or 800 x 640 (5:4) Just try to keep the width as 800):</label>
     <input type="text" id="widthfl" width=300><br>
     <label for="height">Height (Refer to above for height):</label>
     <input type="text" id="heightfl" width=300>
@@ -62,7 +82,7 @@
     <p>Frame With Specified Width & Height:</p>
     <label for="url">Frame embed html file (Don't use relative links like html/game.html use https://game-innovation-studios.github.io/frame/game/game.html)(Please use frame with full window if possible):</label>
     <input type="text" id="urlfr" width=300><br>
-    <label for="width">Width (800 x 533 (3:2)  or 800 x 600 (4:3)  800 x 450 (16:9) Just try to keep the width as 800):</label>
+    <label for="width">Width (800 x 533 (3:2)  or 800 x 600 (4:3)  or 800 x 450 (16:9) or 800 x 667 (6:5) Just try to keep the width as 800):</label>
     <input type="text" id="widthfr" width=300><br>
     <label for="height">Height (Refer to above for height):</label>
     <input type="text" id="heightfr" width=300>
@@ -83,6 +103,6 @@
     <input type="text" id="JS" width=300>
     <button onclick="gameGramJS()">Convert</button><br><br><br>
 
-    <textarea id="output" style="right: 0px; top: 0px;"></textarea>
+    <textarea id="output" style="right: 0px; top: 0px; width: 98vw; height: 150px"></textarea>
   </body>
 </html>
