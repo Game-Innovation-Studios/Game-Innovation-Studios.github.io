@@ -1,0 +1,11 @@
+{
+    "name": "index_frames",
+    "version": "1.0.0",
+    "description": "Indexes fles within a directory.",
+    "main": "index_build.js",
+    "dependencies": {},
+    "devDependencies": {},
+    "scripts": {
+        "index": "node ./index_build.js"
+    }
+}

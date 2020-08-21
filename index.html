@@ -1,130 +1,174 @@
 <!DOCTYPE html>
-<html>
-  <head>
-      <title>reInnovate Games</title>
-      <link rel="icon" href="svg/logo.svg">
-      <meta name="description" content="A free, unblocked, and ad free games website.">
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="theme-color" content="#1e87f0" />
+<html nighteye="disabled">
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<head>
+    <title>reInnovate Games</title>
+    <link rel="icon" href="svg/logo.svg">
+    <meta name="description" content="A free, unblocked, and ad free games website.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1e87f0" />
 
-      <script src="/js/install.js"></script>
-      <link rel="manifest" href="/manifest.webmanifest">
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <meta name="apple-mobile-web-app-status-bar-style" content="default">
-      <meta name="apple-mobile-web-app-title" content="reInnovate Games">
-      <link rel="apple-touch-icon" href="svg/logo.svg">
-      <script>
-      // Register service worker
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then((reg) => {
-                  console.log('Service worker registered.', reg);
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="reInnovate Games">
+    <link rel="apple-touch-icon" href="svg/logo.svg">
+    <script>
+        navigator.serviceWorker.register('/service-worker.js').then(reg => {
+            reg.installing; // the installing worker, or undefined
+            reg.waiting; // the waiting worker, or undefined
+            reg.active; // the active worker, or undefined
+
+            reg.addEventListener('updatefound', () => {
+                // A wild service worker has appeared in reg.installing!
+                const newWorker = reg.installing;
+
+                newWorker.state;
+                // "installing" - the install event has fired, but not yet complete
+                // "installed"  - install complete
+                // "activating" - the activate event has fired, but not yet complete
+                // "activated"  - fully active
+                // "redundant"  - discarded. Either failed install, or it's been
+                //                replaced by a newer version
+
+                newWorker.addEventListener('statechange', () => {
+                    // newWorker.state has changed
                 });
             });
+        });
+
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            // This fires when the service worker controlling this page
+            // changes, eg a new worker has skipped waiting and become
+            // the new active worker.
+        });
+    </script>
+
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+    <script>
+        importEX() {
+            $.getJSON("games.json", function(json) {
+                localStorage.setItem('index', {...JSON.parse(localStorage.getItem('index')),
+                    ...json
+                });
+            });
+
         }
-      </script>
+    </script>
 
+    <script>
+        function infogParse(infoGram) {
+            sessionStorage.setItem('infog', infoGram);
+            window.location.href = 'game.html?cookie=true';
+        }
+    </script>
 
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
 
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-
-  </head>
-
-  <body class="grey darken-3">
+<body class="grey darken-3">
 
     <div class="navbar-fixed">
-          <ul id="games" class="dropdown-content">
-          <b><li><a>Close</a></li></b>
-          <li class="divider"></li>
-          <li><a><b>Platforming Games</b></a></li>
-          <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷩䷽䷒䷎䷺䷟䷒䷇䷓䷶䷺䷳☯&title=2D Minecraft">2D Minecraft</a></li>
-          <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷩䷽䷨䷞䷓䷶䷒䷞䷋䷽䷻䷳䷔&title=3D Platformer">3D Platformer</a></li>
-          <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷩䷶䷨䷞䷈䷶䷨䷬䷤䷽䷻䷇䷔&title=3D Platformer 2">3D Platformer 2</a></li>
-          <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷩䷶䷨䷬䷼䷶䷒䷖䷘䷶䷒䷖䷔&title=Dot World">Dot World</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷚䷚䷞䷊䷗䷘䷾䷸䷚䷕䷐䷯䷩䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷒䷇䷤䷧䷇☯☯&title=Happy Wheels">Happy Wheels</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷸䷩䷔䷹䷑䷾䷺䷮䷯䷂䷕䷞䷃䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷦䷼䷽䷺䷳☯&title=LineRider">LineRider</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷤䷍䷰䷭䷌䷬䷽䷴䷴䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷤䷽䷼䷽䷔&title=MotoX3M">MotoX3M</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷗䷍䷞䷙䷂䷚䷹䷆䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷇䷤䷽䷆䷳☯&title=Portal">Portal</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷈䷲䷤䷹䷃䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷓䷽䷆䷳☯&title=Run">Run</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷈䷲䷤䷹䷨䷏䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔&title=Run 2">Run 2</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷈䷲䷤䷹䷨䷽䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔&title=Run 3">Run 3</a></li>
-          <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷴䷶䷨䷦䷋䷶䷼䷇䷘䷟䷆䷳☯&title=Scratcharia">Scratcharia</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷻䷯䷣䷺䷮䷯䷠䷸䷽䷺䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷓䷽䷆䷳☯&title=Super Mario 63">Super Mario 63</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷻䷯䷣䷺䷮䷯䷌䷆䷞䷑䷌䷼䷇䷈䷲䷍䷞䷈䷶䷍䷰䷑䷾䷺䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷦䷩䷽䷃䷓䷖䷶䷒䷖䷓䷧䷇☯☯&title=Super Mario Crossover">Super Mario Crossover</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷻䷯䷣䷺䷮䷯䷌䷭䷹䷭䷣䷼䷮䷆䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷓䷽䷆䷳☯&title=Super Mario Flash">Super Mario Flash</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷻䷯䷣䷺䷮䷯䷌䷭䷹䷭䷣䷼䷮䷒䷏䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔&title=Super Mario Flash 2">Super Mario Flash 2</a></li>
-          <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷺䷟䷒䷦䷈䷟䷻䷖䷴䷶䷼䷇䷔&title=Super Mario World 3">Super Mario World 3</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷍䷹䷭䷕䷓䷞䷸䷝䷔䷐䷄䷏䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷴䷶䷻䷁䷔&title=Solipskier">Solipskier</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷈䷐䷸䷰䷙䷐䷸䷰䷃䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷓䷽䷆䷳☯&title=vvvvvv">vvvvvv</a></li>
-          <li class="divider"></li>
-          <li><a><b>Idle Games</b></a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷶䷷䷮䷯䷶䷥䷐䷄䷲䷏䷐䷄䷲䷍䷐䷄䷽䷱䷞䷈䷰䷑䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷎䷓䷽䷒䷁䷷䷏䷒䷦䷸䷽䷺䷳䷉&title=Clicker Heroes">Clicker Heroes</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷰䷺䷮䷯䷘䷳䷬䷈䷲䷚䷐䷙䷇䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷨䷁䷔䷟䷓☯☯&title=Grindcraft">Grindcraft</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷥䷰䷸䷣䷺䷐䷾䷰䷚䷞䷙䷽䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷨䷁䷔䷟䷓☯☯&title=Skware Wars">Skware Wars</a></li>
-          <li><a href="game.html?game=䷐䷙䷲䷚䷹䷯䷾䷺䷂䷙䷾䷷䷹䷆䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷐䷙䷲䷚䷹䷯䷦䷍䷞䷸䷝䷔䷐䷆䷤䷔䷹䷑䷽䷍䷲䷺䷳䷉&title=Skid Inc">Skid Inc</a></li>
-          <li><a href="game.html?game=䷐䷙䷲䷚䷹䷯䷾䷺䷂䷙䷾䷷䷹䷆䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷐䷙䷲䷚䷹䷯䷦䷍䷾䷊䷲䷔䷹䷄䷗䷼䷵䷺䷞䷔䷟䷓☯☯&title=Trimps">Trimps</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷩䷕䷬䷄䷲䷱䷾䷭䷌䷭䷹䷊䷕䷲䷐䷭䷩䷕䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Learn to Fly Idle">Learn to Fly Idle</a></li>
-          <li class="divider"></li>
-          <li><a><b>Fighting Games</b></a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷦䷸䷤䷚䷞䷸䷚䷭䷹䷭䷣䷼䷮䷆䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷇䷤䷶䷺䷳䷉&title=Super Smash Flash">Super Smash Flash</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷦䷸䷤䷚䷞䷸䷚䷭䷹䷭䷣䷼䷮䷒䷏䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷴䷶䷻䷞䷔䷟䷓☯☯&title=Super Smash Flash 2">Super Smash Flash 2</a></li>
-          <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷺䷟䷻䷏䷈䷟䷻䷽䷘䷽䷼䷞䷔䷟䷓☯☯&title=Super Scratch Bros">Super Scratch Bros</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷸䷂䷍䷹䷸䷴䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷤䷽䷒䷁䷔䷟䷓☯☯&title=Doom">Doom</a></li>
-          <li class="divider"></li>
-          <li><a><b>Racing Games</b></a></li>
-          <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷼䷶䷨䷞䷩䷽䷻䷎䷈䷟䷆䷳䷉&title=Super Maio Kart">Super Maio Kart</a></li>
-          <li class="divider"></li>
-          <li><a><b>Sports Games</b></a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷼䷂䷴䷮䷭䷣䷱䷐䷭䷰䷍䷬䷯䷓䷺䷽䷒䷎䷋䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=4th and Goal 2018">4th and Goal 2018</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷣䷔䷞䷳䷚䷍䷬䷸䷝䷕䷛䷜䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷸䷶䷺䷳䷉&title=Air Hockey">Air Hockey</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷂䷑䷌䷍䷰䷭䷲䷚䷹䷭䷓䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷤䷶䷒䷁䷔䷟䷓☯☯&title=SH Footbal">Sports Head Football</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷾䷭䷾䷱䷹䷑䷕䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷻䷇䷓䷧䷻䷷☯&title=SH Tennis">Sports Head Tennis</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷇䷑䷣䷼䷮䷸䷾䷴䷬䷑䷣䷷䷹䷆䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷦䷴䷽䷆䷳䷉&title=SH Basketball">Sports Head Basketball</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷾䷑䷌䷷䷹䷭䷾䷘䷬䷑䷣䷷䷹䷆䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷦䷴䷽䷆䷳䷉&title=SH Volleyball">Sports Head Volleyball</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷜䷯䷶䷕䷜䷭䷌䷨䷮䷸䷾䷘䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷻䷇䷓䷧䷻䷷☯&title=SH Ice Hockey">Sports Head Ice Hockey</a></li>
-          <li class="divider"></li>
-          <li><a><b>Strategy Games</b></a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷂䷚䷹䷑䷝䷦䷞䷑䷌䷤䷬䷑䷩䷕䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷻䷇䷤䷧䷻䷷☯&title=Tank Trouble">Tank Trouble</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷔䷹䷊䷐䷕䷞䷙䷶䷓䷮䷭䷾䷺䷐䷜䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷦䷴䷶䷜䷳䷉&title=Silversphere">Silversphere</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷣䷄䷻䷤䷁䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔䷟䷓☯☯&title=QWOP">QWOP</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷩䷕䷬䷄䷲䷱䷾䷭䷌䷭䷹䷊䷳䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔䷟䷓☯☯&title=Learn to Fly">Learn to Fly</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷩䷕䷬䷄䷲䷱䷾䷭䷌䷭䷹䷊䷳䷺䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Learn to Fly 2">Learn to Fly 2</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷩䷕䷬䷄䷲䷱䷾䷭䷌䷭䷹䷊䷳䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Learn to Fly 3">Learn to Fly 3</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷢䷹䷈䷗䷓䷮䷯䷘䷙䷇䷸䷣䷺䷰䷎䷚䷕䷞䷑䷠䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Shopping Cart Hero 3">Shopping Cart Hero 3</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷾䷱䷹䷺䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷴䷽䷆䷳䷉&title=Uno">Uno</a></li>
-          <li class="divider"></li>
-          <li><a><b>Tower Defense Games</b></a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷲䷦䷂䷒䷇䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷋䷽䷒䷁䷔䷟䷓☯☯&title=BTD 4">BTD 4</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷲䷦䷂䷒䷦䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷨䷁䷔䷟䷓☯☯&title=BTD 5">BTD 5</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷤䷔䷹䷑䷾䷨䷞䷑䷣䷑䷰䷣䷂䷎䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Minecraft TD">Minecraft TD</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷝䷔䷹䷑䷰䷳䷹䷸䷤䷜䷰䷄䷶䷢䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷖䷸䷧䷻䷷☯&title=Kingdom Rush">Kingdom Rush</a></li>
-          <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷝䷔䷹䷑䷰䷳䷹䷸䷤䷜䷰䷄䷶䷢䷂䷙䷲䷍䷹䷙䷂䷔䷐䷄䷲䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Kingdom Rush Frontiers">Kingdom Rush Frontiers</a></li>
-      </ul>
-      <nav>
-        <div class="nav-wrapper light-blue accent-3">
-          <a href="#!" class="brand-logo left" style="padding-left: 10px;">reInnovate Games</a>
-          <ul class="right hide-on-med-and-down">
-            <li><a href="search.html">Search</a>
-            <li><a class="dropdown-trigger" style="width: 150px;" href="#!" data-target="games">Games<i class="material-icons right">arrow_drop_down</i></a></li>
-          </ul>
-        </div>
-      </nav>
+        <ul id="games" class="dropdown-content">
+            <b><li><a>Close</a></li></b>
+            <li class="divider"></li>
+            <li><a><b>Platforming Games</b></a></li>
+            <li><a onclick="infogParse(this.getAttribute('infoGram'))" infoGram="⣮⠤⡖⢎⡖⠞⢖⠤⡬⠤⣤⠒⠄⡂⠞⢆⡖⠶⢾⡦⢞⢖⡦⠤⠜⠤⢎⠾⣦⡖⡦⣖⢦⡖⢎⢾⠾⣦⠤⡬⠤⢜⣒⣦⢖⠄⣲⢂⣢⠒⠄⡖⢾⠄⢞⢾⡶⢖⠜⠄⣢⡆⢆⢦⢖⠄⡖⢾⠄⠮⣖⢞⡆⠜⠄⢆⠾⠖⠄⢂⡦⡦⢾⣶⠄⢪⢖⣎⣦⠄⢾⡦⠄⢞⢾⣖⣦⢖⠄⡖⢾⠄⠞⢾⢾⢮⠄⢆⡦⢾⣖⠾⠖⠼⠄⡂⡦⢖⣦⣦⠄⢴⢞⢴⠄⡖⢾⠄⡖⢾⢶⢶⠞⢖⠄⢞⢾⣖⣦⢖⠄⢦⢾⠾⡖⡦⢾⠞⡚⠾⢜⠪⣖⢞⡆⠄⢾⠾⠄⡖⠎⢖⠄⠢⠞⣖⢖⠄⡆⠞⢆⡖⠶⢾⡦⢞⣦⠄⢆⠾⠖⠄⢶⢖⡖⠄⡖⢾⠄⡖⠎⢖⠄⢲⡦⢖⢖⠾⠼⡚⠾⢜⠒⢾⠾⢴⡖⠄⠶⢆⠞⠞⠄⢾⡦⠄⡖⢾⣖⢦⠎⠄⡢⢖⠖⠄⠦⠞⢾⢦⢮⣦⠼⡚⠾⢜⣊⢖⠞⠞⢾⣶⠄⠦⠞⢾⢦⢮⣦⠄⢞⢆⢮⢖⠄⣎⢾⣖⠄⠮⣖⢞⡆⠄⠎⢎⢶⠎⢖⡦⢄⡚⠾⢜⢺⡦⢆⠾⢶⢖⠄⠦⠞⢾⢦⢮⣦⠄⠖⢖⢆⢦⡖⢎⡶⢆⡖⢖⠄⡦⢖⠖⠄⠦⠞⢾⢦⢮⣦⠼⡚⠾⢜⡂⣖⡦⡆⠞⢖⠄⠢⠞⢾⢦⢮⣦⠄⡖⢖⠞⢖⡆⢾⡦⡖⠄⣎⢾⣖⠄⠶⡦⢾⢞⠄⢾⠾⢖⠄⡆⠞⢆⢦⢖⠄⡖⢾⠄⢆⠾⢾⡖⠎⢖⡦⠼⠼⡚⠾⢜⡒⠎⢖⡦⢖⠄⢆⡦⢖⠄⢒⢎⢶⠎⡖⠄⠞⢖⡶⢖⠞⣦⠜⠄⢦⢆⠾⠄⣎⢾⣖⠄⠶⢎⠾⢎⣦⠎⠄⡖⠎⢖⢞⠄⢆⠞⠞⣼⡚⠾⢜⣊⢾⣖⡦⠄⣦⢦⢾⡦⢖⠄⢎⣦⠄⠦⢆⣦⢖⠖⠄⢾⠾⠄⡖⠎⢖⠄⠾⣖⢞⠦⢖⡦⠄⢾⠶⠄⢦⢾⢞⡆⠞⢖⡖⢖⠖⠄⠞⢖⡶⢖⠞⣦⠄⢆⠾⠖⠄⡖⠎⢖⠄⠾⣖⢞⠦⢖⡦⠄⢾⠶⠄⢆⡖⡖⢖⢞⡆⡖⣦⠼⡚⠾⢜⣢⢖⢖⠄⣎⢾⣖⡦⠄⡆⢾⣦⢎⡖⢎⢾⠾⠄⢾⠾⠄⡖⠎⢖⠄⠞⢖⢆⠖⢖⡦⠦⢾⢆⡦⠖⠄⠦⣎⠄⢦⠞⢎⢦⢮⢎⠾⢶⠄⡖⠎⢖⠄⡖⡦⢾⡆⠎⣎⠄⢎⢦⢾⠾⠼⠤⠜⠤⠖⢖⣦⢦⡦⢎⡆⡖⢎⢾⠾⠤⡬⠤⢂⠄⣦⢎⢞⡆⠞⢖⠄⣤⠒⠄⡆⠞⢆⡖⠶⢾⡦⢞⢖⡦⠄⣶⡦⢎⡖⡖⢖⠾⠄⢎⠾⠄⣢⢦⡦⢆⡖⢦⠎⠼⠤⠜⠤⢦⡦⢖⠖⢎⡖⠤⡬⠤⣢⡆⢎⠖⢖⡦⡖⢖⣦⡖⠤⠜⠤⣖⡦⠞⠤⡬⠤⠎⡖⡖⡆⣦⡬⢼⢼⢶⢆⢞⢖⢜⢎⠾⠾⢾⡶⢆⡖⢎⢾⠾⢜⣦⡖⣖⠖⢎⢾⣦⠼⢶⢎⡖⠎⣖⠦⠼⢎⢾⢼⣦⢦⡦⢆⡖⢦⠎⢼⣄⡤⣴⡄⡔⣴⡌⣄⣌⠼⠎⡖⢞⠞⠤⠜⠤⢎⠖⠤⡬⠤⣄⡤⣴⡄⡔⣴⡌⣄⣌⠤⠜⠤⠮⣦⠤⡬⠤⠗⣵⡹⠗⣵⡍⠗⣵⡵⠗⣵⡭⠗⣵⠝⠗⣵⠑⠗⣵⠡⠗⣵⠍⠗⣵⠽⠗⣵⠱⠗⣵⡱⠗⣵⢍⠗⣵⣝⠗⣵⠍⠗⣵⡹⠗⣵⣡⠗⣵⡵⠗⣵⡡⠗⣵⡹⠗⣵⢩⠗⣵⣝⠗⣵⣭⠗⣵⣥⠗⣵⡑⠤⠜⠤⡖⣎⡆⢖⠤⡬⠤⣦⢦⡦⢆⡖⢦⠎⢒⢞⠦⢖⠖⠤⣞">3D Platformer</a></li>
+            <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷩䷶䷨䷞䷈䷶䷨䷬䷤䷽䷻䷇䷔&title=3D Platformer 2">3D Platformer 2</a></li>
+            <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷩䷶䷨䷬䷼䷶䷒䷖䷘䷶䷒䷖䷔&title=Dot World">Dot World</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷚䷚䷞䷊䷗䷘䷾䷸䷚䷕䷐䷯䷩䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷒䷇䷤䷧䷇☯☯&title=Happy Wheels">Happy Wheels</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷸䷩䷔䷹䷑䷾䷺䷮䷯䷂䷕䷞䷃䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷦䷼䷽䷺䷳☯&title=LineRider">LineRider</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷤䷍䷰䷭䷌䷬䷽䷴䷴䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷤䷽䷼䷽䷔&title=MotoX3M">MotoX3M</a></li>
+            <li><a onclick="infogParse(this.getAttribute('infoGram'))" infoGram="⣮⠤⡖⢎⡖⠞⢖⠤⡬⠤⡂⢆⡆⢖⡦⠄⢚⢎⠾⢖⢦⡦⢆⠶⡖⠤⠜⠤⢎⠾⣦⡖⡦⣖⢦⡖⢎⢾⠾⣦⠤⡬⠤⣪⣄⠄⡖⢾⠄⣌⣚⠄⢜⠄⣢⢖⠞⢖⢦⡖⠄⢊⡖⢖⢞⡚⠾⣪⢢⠞⢎⢦⢮⣚⠄⢜⠄⡂⠞⢆⢦⢖⠄⢾⡦⠄⢚⢎⠾⢖⡚⠾⣪⣲⢂⣢⠒⣚⠄⢜⠄⢚⢾⡶⢖⠄⢼⠄⠪⣖⢞⡆⡚⠾⣪⢒⣚⠄⢜⠄⢺⡆⢖⠾⢼⢢⠞⢾⣦⢖⠄⢊⠾⡶⢖⠾⡖⢾⡦⣎⡚⠾⣪⢒⢬⠎⢾⡶⢖⡦⣚⠄⢜⠄⢺⡆⢖⠾⠄⢼⠄⢢⠞⢾⣦⢖⠄⢢⠎⢖⣦⡖⠜⠄⢢⡦⢆⠶⡖⢎⠾⢶⠄⡒⢆⠦⠞⢖⠜⠄⠒⢾⢾⡦⡚⠾⣪⣢⡆⢆⢦⢖⣚⠄⢜⠄⠒⡦⢾⡆⠄⣦⢎⠾⢶⠞⢖⠄⡖⢎⠞⢖⠄⠶⡦⢾⢞⠄⢆⠄⣦⡖⢆⢦⢮⠄⣶⠎⢎⠞⢖⠄⠖⡦⢆⢶⢶⢎⠾⢶⠼⡚⠾⣪⠲⣚⠄⢜⠄⢒⢆⡖⠄⠶⢾⢾⠖⡚⠾⣪⠺⣚⠄⢜⠄⠚⢆⠦⢖⠞⠄⢆⠄⣦⢎⢶⠾⠄⢾⡦⠄⢦⠎⢖⣦⡖⡚⠾⣪⣂⣚⠄⢜⠄⠒⡦⢾⡆⠄⢎⡖⢖⢞⡚⠾⣪⡂⣚⠄⢜⠄⡂⢆⣖⣦⢖⠄⢼⠄⣒⠾⡆⢆⣖⣦⢖⡚⠾⣪⡒⣚⠄⢜⠄⡒⢆⠞⢮⠄⢼⠄⢢⢾⢞⢞⢆⠾⠖⡚⠾⣪⢺⣚⠄⢜⠄⣢⢆⡶⢖⠄⣎⢾⣖⡦⠄⢶⢆⢞⢖⡚⠾⣪⢚⣚⠄⢜⠄⢚⣖⣦⢎⢦⠄⢼⠄⣢⢾⣖⠾⠖⣦⡚⠾⣪⣢⠎⢎⠶⡖⣚⠄⢜⠄⣢⡆⡦⢎⠾⡖⠤⠜⠤⠖⢖⣦⢦⡦⢎⡆⡖⢎⢾⠾⠤⡬⠤⢂⠄⡤⠒⠄⡶⢖⡦⣦⢎⢾⠾⠄⢾⠶⠄⡖⠎⢖⠄⡆⢾⡆⣖⠞⢆⡦⠄⡶⢎⠖⢖⢾⠄⢶⢆⢞⢖⠄⢚⢎⠾⢖⢦⡦⢆⠶⡖⠼⠤⠜⠤⢦⡦⢖⠖⢎⡖⠤⡬⠤⢶⡦⢎⠶⠶⡆⢆⡖⢦⠎⠤⠜⠤⣖⡦⠞⠤⡬⠤⠎⡖⡖⡆⣦⡬⢼⢼⢶⢆⢞⢖⢜⢎⠾⠾⢾⡶⢆⡖⢎⢾⠾⢜⣦⡖⣖⠖⢎⢾⣦⠼⢶⢎⡖⠎⣖⠦⠼⢎⢾⢼⣦⢦⡦⢆⡖⢦⠎⢼⣄⡄⣄⡤⡌⡔⡄⣴⠼⠎⡖⢞⠞⠤⠜⠤⢎⠖⠤⡬⠤⣄⡄⣄⡤⡌⡔⡄⣴⠤⠜⠤⠮⣦⠤⡬⠤⠗⣵⡹⠗⣵⡍⠗⣵⡵⠗⣵⡭⠗⣵⠝⠗⣵⠑⠗⣵⠡⠗⣵⠍⠗⣵⠽⠗⣵⠱⠗⣵⡱⠗⣵⢍⠗⣵⣝⠗⣵⡡⠗⣵⠹⠗⣵⡭⠗⣵⣹⠗⣵⡡⠗⣵⢱⠗⣵⣡⠗⣵⡵⠗⣵⡭⠗⣵⣥⠧⡉⢽⠤⠜⠤⡖⣎⡆⢖⠤⡬⠤⣦⢦⡦⢆⡖⢦⠎⢒⢞⠦⢖⠖⠤⣞">Paper Minecraft</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷗䷍䷞䷙䷂䷚䷹䷆䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷇䷤䷽䷆䷳☯&title=Portal">Portal</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷈䷲䷤䷹䷃䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷓䷽䷆䷳☯&title=Run">Run</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷈䷲䷤䷹䷨䷏䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔&title=Run 2">Run 2</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷈䷲䷤䷹䷨䷽䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔&title=Run 3">Run 3</a></li>
+            <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷴䷶䷨䷦䷋䷶䷼䷇䷘䷟䷆䷳☯&title=Scratcharia">Scratcharia</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷻䷯䷣䷺䷮䷯䷠䷸䷽䷺䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷓䷽䷆䷳☯&title=Super Mario 63">Super Mario 63</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷻䷯䷣䷺䷮䷯䷌䷆䷞䷑䷌䷼䷇䷈䷲䷍䷞䷈䷶䷍䷰䷑䷾䷺䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷦䷩䷽䷃䷓䷖䷶䷒䷖䷓䷧䷇☯☯&title=Super Mario Crossover">Super Mario Crossover</a></li>
+            <li><a onclick="infogParse(this.getAttribute('infoGram'))" infoGram="⣮⠤⡖⢎⡖⠞⢖⠤⡬⠤⣢⣖⡆⢖⡦⠄⢚⢆⡦⢎⢾⠄⠲⠞⢆⣦⠎⠤⠜⠤⢎⠾⣦⡖⡦⣖⢦⡖⢎⢾⠾⣦⠤⡬⠤⢚⢾⡶⢖⠄⡦⢎⢶⠎⡖⡬⠄⠧⠱⡡⡚⠾⢚⢾⡶⢖⠄⠞⢖⠶⡖⡬⠄⠧⠱⡁⡚⠾⠪⣖⢞⡆⡬⠄⠧⠱⣁⡚⠾⢢⡦⢾⣖⢦⠎⡬⠄⠧⠱⣡⡚⠾⠲⢎⡦⢖⠦⢆⠞⠞⣦⡬⠄⣪⣦⡆⢆⢦⢖⣚⡚⠾⢺⡆⢖⠾⠄⠒⢾⢾⡦⣦⡬⠄⣪⣦⡆⢆⢦⢖⣚⠤⠜⠤⠖⢖⣦⢦⡦⢎⡆⡖⢎⢾⠾⠤⡬⠤⣢⣖⡆⢖⡦⠄⢚⢆⡦⢎⢾⠄⠲⠞⢆⣦⠎⠄⢎⣦⠄⢾⠶⠄⢦⢾⣖⡦⣦⢖⠜⠄⢆⠄⢦⠞⢾⠾⢖⠄⢾⠶⠄⡖⠎⢖⠄⡆⢾⡆⣖⠞⢆⡦⠄⠺⢎⠾⡖⢖⠾⠖⢾⠄⢶⢆⢞⢖⠜⠄⣢⣖⡆⢖⡦⠄⢚⢆⡦⢎⢾⠄⠢⡦⢾⣦⠼⠄⣊⢾⣖⠄⢦⢆⠾⠄⡆⠞⢆⣎⠄⢆⣦⠄⢚⢆⡦⢎⢾⠄⢾⡦⠄⠚⣖⢎⢶⢎⠄⢆⠾⠖⠄⡖⠎⢖⠄⢶⢾⢆⠞⠄⢎⣦⠄⡖⢾⠄⡦⢖⣦⢦⣖⢖⠄⡖⠎⢖⠄⡆⡦⢎⠾⢦⢖⣦⣦⠄⠶⡦⢾⢞⠄⡖⠎⢖⠄⢖⡶⢎⠞⠄⠢⢾⣶⣦⢖⡦⠄⡬⣢⠼⠄⡒⠎⢖⠄⢶⢆⢞⢖⠄⢎⣦⠄⢞⢆⠖⢖⠄⡖⢾⠄⠦⢖⠄⣦⢎⢞⢎⠞⢆⡦⠄⠦⣖⡖⠄⢎⡖⣦⠄⠾⢾⡖⠄⢆⠄⢖⡎⢆⢦⡖⠄⢦⢾⡆⣎⠼⠄⣢⢾⠄⢆⠞⠞⠄⡖⠎⢖⠄⠞⢖⡶⢖⠞⣦⠄⢆⡦⢖⠄⠾⢖⣶⠄⢆⠾⠖⠄⣦⢾⢞⢖⠄⢾⠦⠮⢖⢦⡖⣦⠄⢆⡦⢖⠄⡖⢆⢮⢖⠾⠄⠶⡦⢾⢞⠄⢾⡖⠎⢖⡦⠄⢚⢆⡦⢎⢾⠄⢶⢆⢞⢖⣦⠜⠄⠞⢎⢮⢖⠄⡖⠎⢖⠄⣶⢾⡦⠞⠖⠄⢞⢆⡆⠄⢎⠾⠄⣢⢚⠢⣤⠼⠄⣢⣖⡆⢖⡦⠄⢚⢆⡦⢎⢾⠄⠲⠞⢆⣦⠎⠄⢎⠾⢦⠞⣖⠖⢖⣦⠄⢆⠾⠄⢎⠾⢜⢶⢆⢞⢖⠄⠞⢖⡶⢖⠞⠄⢖⠖⢎⡖⢾⡦⠄⣶⠎⢎⢦⠎⠄⢆⠞⠞⢾⣶⣦⠄⣎⢾⣖⠄⡖⢾⠄⢦⡦⢖⢆⡖⢖⠄⣎⢾⣖⡦⠄⢾⣶⠾⠄⠞⢖⡶⢖⠞⣦⠄⣶⢎⡖⠎⠄⡆⢾⣶⢖⡦⣦⠄⣖⡆⣦⠜⠄⡖⢎⠞⢖⣦⠜⠄⢞⢾⠾⣦⡖⢖⡦⣦⠄⢆⠾⠖⠄⡆⠞⢆⡖⠶⢾⡦⢞⣦⠼⠄⠺⢾⡖⢖⡬⠄⣎⢾⣖⠄⢦⢆⠾⠄⣦⢆⡶⢖⠄⢆⠾⠖⠄⣦⠎⢆⡦⢖⠄⣎⢾⣖⡦⠄⠞⢖⡶⢖⠞⣦⠄⣖⣦⢎⠾⢶⠄⠞⢖⡶⢖⠞⠄⢦⢾⠖⢖⣦⠄⢶⢖⠾⢖⡦⢆⡖⢖⠖⠄⠦⣎⠄⡖⠎⢖⠄⢶⢆⢞⢖⠼⠄⡒⠎⢖⠄⢶⢆⢞⢖⠄⢆⠞⣦⢾⠄⣖⣦⢖⠄⡖⠎⢖⠄⠶⠞⢆⣦⠎⠄⡆⠞⢆⣎⢖⡦⠄⡖⢾⠄⡦⣖⠾⠄⢎⠾⡖⢾⠄⣎⢾⣖⡦⠄⠦⡦⢾⣶⣦⢖⡦⠄⣦⢾⠄⢞⢆⢮⢖⠄⣦⣖⡦⢖⠄⣎⢾⣖⠄⠎⢆⡶⢖⠄⡖⠎⢖⠄⠞⢆⡖⢖⣦⡖⠄⡶⢖⡦⣦⢎⢾⠾⠄⢎⠾⣦⡖⢆⠞⠞⢖⠖⠼⠤⠜⠤⢦⡦⢖⠖⢎⡖⠤⡬⠤⡆⢾⣖⢖⡖⡆⣖⠄⢶⢆⢞⢖⣦⠤⠜⠤⣖⡦⠞⠤⡬⠤⠎⡖⡖⡆⣦⡬⢼⢼⢶⢆⢞⢖⢜⢎⠾⠾⢾⡶⢆⡖⢎⢾⠾⢜⣦⡖⣖⠖⢎⢾⣦⠼⢶⢎⡖⠎⣖⠦⠼⢎⢾⢼⣦⣶⠶⢼⣢⣖⡆⢖⡦⢚⢆⡦⢎⢾⠲⠞⢆⣦⠎⠼⣦⣶⠶⠤⠜⠤⣶⢎⠖⡖⠎⠤⡬⠤⡌⡄⡄⡆⡎⠤⠜⠤⠎⢖⢎⢶⠎⡖⠤⡬⠤⡴⡄⡄⡆⡎⠤⠜⠤⠮⣦⠤⡬⠤⠗⣵⡁⠗⣵⣁⠗⣵⢍⠗⣵⡩⠗⣵⡹⠗⣵⡍⠗⣵⡩⠗⣵⣑⠗⣵⡹⠗⣵⢡⠗⣵⡱⠗⣵⣉⠗⣵⠽⠗⣵⠩⠗⣵⠡⠗⣵⡕⠗⣵⡹⠗⣵⠩⠗⣵⣝⠗⣵⢑⠗⣵⣕⠗⣵⡭⠗⣵⠙⠗⣵⣉⠗⣵⠝⠗⣵⢽⠗⣵⠕⠗⣵⣑⠗⣵⣕⠗⣵⢽⠗⣵⣑⠗⣵⣅⠗⣵⣍⠗⣵⣁⠗⣵⠙⠗⣵⡍⠗⣵⠝⠗⣵⠑⠗⣵⠡⠗⣵⡑⠗⣵⣍⠗⣵⡍⠗⣵⢩⠗⣵⣙⠗⣵⡹⠗⣵⠉⠗⣵⠡⠗⣵⠕⠗⣵⡁⠗⣵⢝⠗⣵⣑⠗⣵⢙⠗⣵⡹⠗⣵⡭⠗⣵⡉⠗⣵⣉⠗⣵⠽⠗⣵⠑⠗⣵⠡⠗⣵⠥⠗⣵⡅⠗⣵⢽⠗⣵⢹⠗⣵⣅⠗⣵⠽⠗⣵⢽⠗⣵⠅⠗⣵⢙⠗⣵⡹⠗⣵⠉⠗⣵⡅⠗⣵⣁⠗⣵⣕⠗⣵⠕⠗⣵⡵⠗⣵⠕⠗⣵⡹⠗⣵⢝⠗⣵⡽⠗⣵⡭⠗⣵⣭⠗⣵⢽⠗⣵⢥⠗⣵⡭⠗⣵⠽⠗⣵⢽⠗⣵⠙⠗⣵⢝⠗⣵⣍⠗⣵⢝⠗⣵⢥⠗⣵⡝⠗⣵⠽⠗⣵⠱⠗⣵⡉⠗⣵⡝⠗⣵⡅⠗⣵⡍⠗⣵⠝⠗⣵⣉⠗⣵⣕⠗⣵⠱⠗⣵⢁⠗⣵⢩⠗⣵⣝⠗⣵⡡⠗⣵⢁⠗⣵⣵⠗⣵⢹⠗⣵⡡⠗⣵⠝⠗⣵⣡⠗⣵⣝⠗⣵⠱⠗⣵⣥⠧⡉⢽⠤⠜⠤⡖⣎⡆⢖⠤⡬⠤⠶⠞⢆⣦⠎⠤⣞">Super Mario Flash</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷻䷯䷣䷺䷮䷯䷌䷭䷹䷭䷣䷼䷮䷒䷏䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔&title=Super Mario Flash 2">Super Mario Flash 2</a></li>
+            <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷺䷟䷒䷦䷈䷟䷻䷖䷴䷶䷼䷇䷔&title=Super Mario World 3">Super Mario World 3</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷍䷹䷭䷕䷓䷞䷸䷝䷔䷐䷄䷏䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷴䷶䷻䷁䷔&title=Solipskier">Solipskier</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷈䷐䷸䷰䷙䷐䷸䷰䷃䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷓䷽䷆䷳☯&title=vvvvvv">vvvvvv</a></li>
+            <li class="divider"></li>
+            <li><a><b>Idle Games</b></a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷶䷷䷮䷯䷶䷥䷐䷄䷲䷏䷐䷄䷲䷍䷐䷄䷽䷱䷞䷈䷰䷑䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷎䷓䷽䷒䷁䷷䷏䷒䷦䷸䷽䷺䷳䷉&title=Clicker Heroes">Clicker Heroes</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷰䷺䷮䷯䷘䷳䷬䷈䷲䷚䷐䷙䷇䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷨䷁䷔䷟䷓☯☯&title=Grindcraft">Grindcraft</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷥䷰䷸䷣䷺䷐䷾䷰䷚䷞䷙䷽䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷨䷁䷔䷟䷓☯☯&title=Skware Wars">Skware Wars</a></li>
+            <li><a onclick="infogParse(this.getAttribute('infoGram'))" infoGram="⣮⠤⡖⢎⡖⠞⢖⠤⡬⠤⣢⢮⢎⠖⢊⠾⢦⠤⠜⠤⢎⠾⣦⡖⡦⣖⢦⡖⢎⢾⠾⣦⠤⡬⠤⣢⢮⢎⠖⢊⠾⢦⠄⢎⣦⠄⢆⠄⡖⢖⡦⢞⢎⠾⢆⠞⢜⠦⢆⣦⢖⠖⠄⢎⠖⠞⢖⢜⢶⢆⢞⢖⠜⠄⣶⡦⢎⡖⢖⠄⢦⢾⢞⢞⢆⠾⠖⣦⠄⡖⢾⠄⢖⢆⡦⠾⠄⢞⢾⠾⢖⣎⠜⠄⠞⢖⡶⢖⠞⣖⡆⠄⢆⠾⠖⠄⢖⡎⡆⢆⠾⠖⠄⣎⢾⣖⡦⠄⠦⢾⡖⠾⢖⡖⠄⠾⢖⡖⣶⢾⡦⢮⠼⠤⠜⠤⢦⡦⢖⠖⢎⡖⠤⡬⠤⡒⢾⡖⢾⢞⢊⠾⢦⠤⠜⠤⣖⡦⠞⠤⡬⠤⠎⡖⡖⡆⣦⡬⢼⢼⢶⢆⢞⢖⢜⢎⠾⠾⢾⡶⢆⡖⢎⢾⠾⢜⣦⡖⣖⠖⢎⢾⣦⠼⢶⢎⡖⠎⣖⠦⠼⢎⢾⢼⠶⡦⢆⢞⢖⢼⣦⢮⢎⠖⢜⢎⠾⢦⢼⠤⠜⠤⣶⢎⠖⡖⠎⠤⡬⠤⢦⢆⠞⢦⠌⣄⡄⡄⢔⠄⢜⠄⡔⡄⡆⡎⢌⠤⠜⠤⠎⢖⢎⢶⠎⡖⠤⡬⠤⢦⢆⠞⢦⠌⣄⡄⡄⢔⠄⢜⠄⣄⡄⡔⡆⡎⢌⠤⠜⠤⠮⣦⠤⡬⠤⠗⣵⡁⠗⣵⣉⠗⣵⡥⠗⣵⡩⠗⣵⣍⠗⣵⢽⠗⣵⡽⠗⣵⡭⠗⣵⠡⠗⣵⣉⠗⣵⡽⠗⣵⣵⠗⣵⣍⠗⣵⠱⠗⣵⡱⠗⣵⣉⠗⣵⠽⠗⣵⠩⠗⣵⠡⠗⣵⡕⠗⣵⡹⠗⣵⠩⠗⣵⣝⠗⣵⢑⠗⣵⣕⠗⣵⡭⠗⣵⠙⠗⣵⣉⠗⣵⠝⠗⣵⢽⠗⣵⠕⠗⣵⣑⠗⣵⣕⠗⣵⢽⠗⣵⣑⠗⣵⣅⠗⣵⣍⠗⣵⣁⠗⣵⠙⠗⣵⡍⠗⣵⠝⠗⣵⠑⠗⣵⠡⠗⣵⡑⠗⣵⣍⠗⣵⡍⠗⣵⢩⠗⣵⣙⠗⣵⡹⠗⣵⠉⠗⣵⠡⠗⣵⠕⠗⣵⡁⠗⣵⢝⠗⣵⣑⠗⣵⢙⠗⣵⡹⠗⣵⡭⠗⣵⡉⠗⣵⣉⠗⣵⠽⠗⣵⠑⠗⣵⠡⠗⣵⠥⠗⣵⡅⠗⣵⢽⠗⣵⢹⠗⣵⣅⠗⣵⠽⠗⣵⢽⠗⣵⠅⠗⣵⢙⠗⣵⡁⠗⣵⣉⠗⣵⡥⠗⣵⡩⠗⣵⣍⠗⣵⢽⠗⣵⠵⠗⣵⢙⠗⣵⡹⠗⣵⡍⠗⣵⣙⠗⣵⡑⠗⣵⡁⠗⣵⠱⠗⣵⠕⠗⣵⡑⠗⣵⣍⠗⣵⣁⠗⣵⣝⠗⣵⢙⠗⣵⡥⠗⣵⡭⠗⣵⣥⠗⣵⢉⠤⠜⠤⡖⣎⡆⢖⠤⡬⠤⠶⡦⢆⢞⢖⠤⣞">Skid Inc</a></li>
+            <li><a href="game.html?game=䷐䷙䷲䷚䷹䷯䷾䷺䷂䷙䷾䷷䷹䷆䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷐䷙䷲䷚䷹䷯䷦䷍䷾䷊䷲䷔䷹䷄䷗䷼䷵䷺䷞䷔䷟䷓☯☯&title=Trimps">Trimps</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷩䷕䷬䷄䷲䷱䷾䷭䷌䷭䷹䷊䷕䷲䷐䷭䷩䷕䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Learn to Fly Idle">Learn to Fly Idle</a></li>
+            <li class="divider"></li>
+            <li><a><b>Fighting Games</b></a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷦䷸䷤䷚䷞䷸䷚䷭䷹䷭䷣䷼䷮䷆䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷇䷤䷶䷺䷳䷉&title=Super Smash Flash">Super Smash Flash</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷤䷞䷭䷾䷺䷦䷸䷤䷚䷞䷸䷚䷭䷹䷭䷣䷼䷮䷒䷏䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷴䷶䷻䷞䷔䷟䷓☯☯&title=Super Smash Flash 2">Super Smash Flash 2</a></li>
+            <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷺䷟䷻䷏䷈䷟䷻䷽䷘䷽䷼䷞䷔䷟䷓☯☯&title=Super Scratch Bros">Super Scratch Bros</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷸䷂䷍䷹䷸䷴䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷤䷽䷒䷁䷔䷟䷓☯☯&title=Doom">Doom</a></li>
+            <li class="divider"></li>
+            <li><a><b>Racing Games</b></a></li>
+            <li><a href="game.html?game=䷞䷸䷶䷺䷬䷄䷂䷨䷮䷆䷖䷼䷶䷨䷞䷩䷽䷻䷎䷈䷟䷆䷳䷉&title=Super Maio Kart">Super Maio Kart</a></li>
+            <li class="divider"></li>
+            <li><a><b>Sports Games</b></a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷼䷂䷴䷮䷭䷣䷱䷐䷭䷰䷍䷬䷯䷓䷺䷽䷒䷎䷋䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=4th and Goal 2018">4th and Goal 2018</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷣䷔䷞䷳䷚䷍䷬䷸䷝䷕䷛䷜䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷸䷶䷺䷳䷉&title=Air Hockey">Air Hockey</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷂䷑䷌䷍䷰䷭䷲䷚䷹䷭䷓䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷤䷶䷒䷁䷔䷟䷓☯☯&title=SH Footbal">Sports Head Football</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷾䷭䷾䷱䷹䷑䷕䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷻䷇䷓䷧䷻䷷☯&title=SH Tennis">Sports Head Tennis</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷇䷑䷣䷼䷮䷸䷾䷴䷬䷑䷣䷷䷹䷆䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷦䷴䷽䷆䷳䷉&title=SH Basketball">Sports Head Basketball</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷾䷑䷌䷷䷹䷭䷾䷘䷬䷑䷣䷷䷹䷆䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷦䷴䷽䷆䷳䷉&title=SH Volleyball">Sports Head Volleyball</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷏䷜䷯䷶䷕䷜䷭䷌䷨䷮䷸䷾䷘䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷻䷇䷓䷧䷻䷷☯&title=SH Ice Hockey">Sports Head Ice Hockey</a></li>
+            <li class="divider"></li>
+            <li><a><b>Strategy Games</b></a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷂䷚䷹䷑䷝䷦䷞䷑䷌䷤䷬䷑䷩䷕䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷻䷇䷤䷧䷻䷷☯&title=Tank Trouble">Tank Trouble</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷔䷹䷊䷐䷕䷞䷙䷶䷓䷮䷭䷾䷺䷐䷜䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷦䷴䷶䷜䷳䷉&title=Silversphere">Silversphere</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷣䷄䷻䷤䷁䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔䷟䷓☯☯&title=QWOP">QWOP</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷩䷕䷬䷄䷲䷱䷾䷭䷌䷭䷹䷊䷳䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷒䷁䷔䷟䷓☯☯&title=Learn to Fly">Learn to Fly</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷩䷕䷬䷄䷲䷱䷾䷭䷌䷭䷹䷊䷳䷺䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Learn to Fly 2">Learn to Fly 2</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷩䷕䷬䷄䷲䷱䷾䷭䷌䷭䷹䷊䷳䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Learn to Fly 3">Learn to Fly 3</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷶䷢䷹䷈䷗䷓䷮䷯䷘䷙䷇䷸䷣䷺䷰䷎䷚䷕䷞䷑䷠䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Shopping Cart Hero 3">Shopping Cart Hero 3</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷤䷾䷱䷹䷺䷘䷼䷰䷸䷬䷙䷵䷆䷁䷋䷽䷒䷁䷷䷏䷒䷬䷴䷽䷆䷳䷉&title=Uno">Uno</a></li>
+            <li class="divider"></li>
+            <li><a><b>Tower Defense Games</b></a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷲䷦䷂䷒䷇䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷋䷽䷒䷁䷔䷟䷓☯☯&title=BTD 4">BTD 4</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷲䷦䷂䷒䷦䷱䷞䷈䷰䷑䷲䷺䷓䷖䷟䷒䷁䷓䷵䷆䷁䷸䷽䷨䷁䷔䷟䷓☯☯&title=BTD 5">BTD 5</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷤䷔䷹䷑䷾䷨䷞䷑䷣䷑䷰䷣䷂䷎䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Minecraft TD">Minecraft TD</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷝䷔䷹䷑䷰䷳䷹䷸䷤䷜䷰䷄䷶䷢䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷖䷸䷧䷻䷷☯&title=Kingdom Rush">Kingdom Rush</a></li>
+            <li><a href="game.html?game=䷐䷑䷩䷚䷞䷸䷚䷕䷞䷃䷖䷙䷮䷊䷂䷴䷞䷊䷽䷅䷵䷺䷌䷙䷬䷯䷤䷕䷵䷯䷕䷱䷹䷑䷌䷸䷬䷄䷂䷔䷹䷸䷋䷝䷞䷈䷂䷤䷐䷭䷕䷍䷞䷺䷘䷙䷮䷄䷂䷢䷰䷯䷏䷱䷮䷯䷠䷍䷞䷈䷰䷑䷵䷴䷝䷔䷹䷑䷰䷳䷹䷸䷤䷜䷰䷄䷶䷢䷂䷙䷲䷍䷹䷙䷂䷔䷐䷄䷲䷼䷵䷙䷶䷈䷐䷃䷞䷷䷏䷒䷖䷓䷽䷆䷓䷖䷶䷨䷁䷓䷧䷻䷷☯&title=Kingdom Rush Frontiers">Kingdom Rush Frontiers</a></li>
+            <li class="divider"></li>
+            <li><a><b>Game Streaming</b></a></li>
+            <li><a onclick="infogParse(this.getAttribute('infoGram'))" infoGram="⣮⠤⣖⡦⠞⠤⡬⠤⠎⡖⡖⡆⣦⡬⢼⢼⡆⠞⢆⣎⠼⡦⢆⢎⠾⣶⢆⣎⠼⢦⢾⢞⢼⠤⠜⠤⠮⣦⠤⡬⠤⠗⣵⡁⠗⣵⣉⠗⣵⡥⠗⣵⡩⠗⣵⣍⠗⣵⢽⠗⣵⡽⠗⣵⡭⠗⣵⠡⠗⣵⣉⠗⣵⡽⠗⣵⣵⠗⣵⣍⠗⣵⠱⠗⣵⡱⠗⣵⢡⠗⣵⠽⠗⣵⠩⠗⣵⠡⠗⣵⡕⠗⣵⡹⠗⣵⠩⠗⣵⣝⠗⣵⢑⠗⣵⣕⠗⣵⡭⠗⣵⠙⠗⣵⣡⠗⣵⣍⠗⣵⢝⠗⣵⢥⠗⣵⡉⠗⣵⣕⠗⣵⣉⠗⣵⡥⠗⣵⡩⠗⣵⠽⠗⣵⢽⠗⣵⡉⠗⣵⠉⠗⣵⠝⠗⣵⠑⠗⣵⣥⠗⣵⣅⠗⣵⠝⠗⣵⡍⠗⣵⠙⠗⣵⣙⠗⣵⣕⠗⣵⡭⠗⣵⢹⠗⣵⡑⠤⠜⠤⡖⣎⡆⢖⠤⡬⠤⠶⡦⢆⢞⢖⠲⣖⠞⠞⠤⣞">Rainway</a></li>
+            <li><a onclick="infogParse(this.getAttribute('infoGram'))" infoGram="⣮⠤⣖⡦⠞⠤⡬⠤⠎⡖⡖⡆⣦⡬⢼⢼⢆⡆⡆⠼⡆⢆⡦⣦⢖⢦⢶⢆⢞⢎⠾⢶⠼⢦⢾⢞⢼⠤⠜⠤⠮⣦⠤⡬⠤⠗⣵⡁⠗⣵⣉⠗⣵⡥⠗⣵⡩⠗⣵⣍⠗⣵⢽⠗⣵⡽⠗⣵⡭⠗⣵⠡⠗⣵⣉⠗⣵⡽⠗⣵⣵⠗⣵⣍⠗⣵⠱⠗⣵⡱⠗⣵⢡⠗⣵⠽⠗⣵⠩⠗⣵⠡⠗⣵⡕⠗⣵⡹⠗⣵⠩⠗⣵⣝⠗⣵⢑⠗⣵⣕⠗⣵⡭⠗⣵⠙⠗⣵⡩⠗⣵⡹⠗⣵⠩⠗⣵⢁⠗⣵⣅⠗⣵⡹⠗⣵⢝⠗⣵⢥⠗⣵⡭⠗⣵⡹⠗⣵⡍⠗⣵⡽⠗⣵⠍⠗⣵⡁⠗⣵⡍⠗⣵⢥⠗⣵⣙⠗⣵⠽⠗⣵⢽⠗⣵⡉⠗⣵⣉⠗⣵⣕⠗⣵⣁⠗⣵⡵⠗⣵⢙⠗⣵⣍⠗⣵⡙⠗⣵⠅⠗⣵⢡⠗⣵⢵⠗⣵⢱⠧⡉⢽⠧⡉⢽⠤⠜⠤⡖⣎⡆⢖⠤⡬⠤⠶⡦⢆⢞⢖⠲⣖⠞⠞⠤⣞">Parsec</a></li>
+        </ul>
+        <nav>
+            <div class="nav-wrapper light-blue accent-3">
+                <a href="" class="brand-logo left" style="padding-left: 10px;">reInnovate Games</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a class="dropdown-trigger" style="width: 150px;" href="#!" data-target="games">Games<i class="material-icons right">arrow_drop_down</i></a></li>
+                </ul>
+            </div>
+        </nav>
     </div>
 
-    <p><h1 style="color: #fff" class="center">Welcome to reInnovate Games</h1></p>
 
+    <h1 style="color: #fff;" class="center">
+        Welcome to reInnovate Games
+    </h1>
+    <!--<p style="color: #fff;" class="center">
+        NOTICE: With the recent restructuring of the website, we have decided to require that you use yor own list or <a style="color: lightblue;" href="importList.html">import a external list</a> or <a onclick="importEX()" style="cursor: pointer; color: lightblue;">import/update from the example.</a>
+    </p>-->
 
 
 
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript">
-      $('.dropdown-trigger').dropdown();
+        $('.dropdown-trigger').dropdown();
     </script>
-  </body>
+</body>
 
 </html>

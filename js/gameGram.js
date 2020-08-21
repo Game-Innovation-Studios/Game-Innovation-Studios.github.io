@@ -1,9 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 var hexagramEncode = require("hexagram-encode");
+var brailleEncode = require("braille-encode");
 var Buffer = require('buffer/').Buffer
-
-var ggDecoded;
-var ggEncoded;
 
 window.ggEncode = function(game) {
   var ggBuf = new Buffer.from(game);
@@ -17,7 +15,18 @@ window.ggDecode = function(encoded) {
    return(ggDecoded);
 }
 
-},{"buffer/":3,"hexagram-encode":4}],2:[function(require,module,exports){
+window.igEncode = function(game) {
+  var igBuf = new Buffer.from(game);
+  var igEncoded = brailleEncode.encode(igBuf);
+  return(igEncoded);
+}
+
+window.igDecode = function(encoded) {
+   var igBuf = brailleEncode.decode(encoded);
+   var igDecoded = igBuf.toString();
+   return(igDecoded);
+}
+},{"braille-encode":3,"buffer/":4,"hexagram-encode":5}],2:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -172,6 +181,60 @@ function fromByteArray (uint8) {
 }
 
 },{}],3:[function(require,module,exports){
+(function (Buffer){
+/**
+	Convert arbitrary binary data to semi-human-readable Braille and back.
+*/
+
+// This is the magical lookup table.
+var encodechar = (
+	"⠀⢀⠠⢠⠐⢐⠰⢰⠈⢈⠨⢨⠘⢘⠸⢸" +
+	"⡀⣀⡠⣠⡐⣐⡰⣰⡈⣈⡨⣨⡘⣘⡸⣸" +
+	"⠄⢄⠤⢤⠔⢔⠴⢴⠌⢌⠬⢬⠜⢜⠼⢼" +
+	"⡄⣄⡤⣤⡔⣔⡴⣴⡌⣌⡬⣬⡜⣜⡼⣼" +
+	"⠂⢂⠢⢢⠒⢒⠲⢲⠊⢊⠪⢪⠚⢚⠺⢺" +
+	"⡂⣂⡢⣢⡒⣒⡲⣲⡊⣊⡪⣪⡚⣚⡺⣺" +
+	"⠆⢆⠦⢦⠖⢖⠶⢶⠎⢎⠮⢮⠞⢞⠾⢾" +
+	"⡆⣆⡦⣦⡖⣖⡶⣶⡎⣎⡮⣮⡞⣞⡾⣾" +
+	"⠁⢁⠡⢡⠑⢑⠱⢱⠉⢉⠩⢩⠙⢙⠹⢹" +
+	"⡁⣁⡡⣡⡑⣑⡱⣱⡉⣉⡩⣩⡙⣙⡹⣹" +
+	"⠅⢅⠥⢥⠕⢕⠵⢵⠍⢍⠭⢭⠝⢝⠽⢽" +
+	"⡅⣅⡥⣥⡕⣕⡵⣵⡍⣍⡭⣭⡝⣝⡽⣽" +
+	"⠃⢃⠣⢣⠓⢓⠳⢳⠋⢋⠫⢫⠛⢛⠻⢻" +
+	"⡃⣃⡣⣣⡓⣓⡳⣳⡋⣋⡫⣫⡛⣛⡻⣻" +
+	"⠇⢇⠧⢧⠗⢗⠷⢷⠏⢏⠯⢯⠟⢟⠿⢿" +
+	"⡇⣇⡧⣧⡗⣗⡷⣷⡏⣏⡯⣯⡟⣟⡿⣿"
+).split("");
+
+// Invert it for decoding purposes.
+var decodechar = {};
+encodechar.forEach(function(ch, i) {
+	decodechar[ch] = i;
+});
+
+module.exports = {
+	encode: function(buf) {
+		var str = "";
+		for(var b of buf) {
+			str += encodechar[b];
+		}
+		return str;
+	},
+	
+	decode: function(str) {
+		var arr = [];
+		str.split("").forEach(function(ch) {
+			if(!(ch in decodechar)) {
+				throw Error("Cannot decode character '" + ch.charCodeAt(0) + "', not Braille.");
+			}
+			arr.push(decodechar[ch]);
+		});
+		return new Buffer(arr);
+	}
+};
+
+}).call(this,require("buffer").Buffer)
+},{"buffer":8}],4:[function(require,module,exports){
 (function (Buffer){
 /*!
  * The buffer module from node.js, for the browser.
@@ -1969,7 +2032,7 @@ var hexSliceLookupTable = (function () {
 })()
 
 }).call(this,require("buffer").Buffer)
-},{"base64-js":2,"buffer":7,"ieee754":5}],4:[function(require,module,exports){
+},{"base64-js":2,"buffer":8,"ieee754":6}],5:[function(require,module,exports){
 (function (Buffer){
 /** Convert binary data to/from I Ching hexagrams such that the binary is visible */
 
@@ -2013,7 +2076,7 @@ module.exports = {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":7}],5:[function(require,module,exports){
+},{"buffer":8}],6:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -2099,9 +2162,9 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 arguments[4][2][0].apply(exports,arguments)
-},{"dup":2}],7:[function(require,module,exports){
+},{"dup":2}],8:[function(require,module,exports){
 (function (Buffer){
 /*!
  * The buffer module from node.js, for the browser.
@@ -3882,6 +3945,6 @@ function numberIsNaN (obj) {
 }
 
 }).call(this,require("buffer").Buffer)
-},{"base64-js":6,"buffer":7,"ieee754":8}],8:[function(require,module,exports){
-arguments[4][5][0].apply(exports,arguments)
-},{"dup":5}]},{},[1]);
+},{"base64-js":7,"buffer":8,"ieee754":9}],9:[function(require,module,exports){
+arguments[4][6][0].apply(exports,arguments)
+},{"dup":6}]},{},[1]);

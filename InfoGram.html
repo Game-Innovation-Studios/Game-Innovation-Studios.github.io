@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Make a Game Gram</title>
+    <script src="js/gameGram.js"></script>
+    <meta charset="utf-8" />
+    <script type="text/javascript">
+        function copyStringToClipboard(str) {
+            // Create new element
+            var el = document.createElement("textarea");
+            // Set value (string to be copied)
+            el.value = str;
+            // Set non-editable to avoid focus and move outside of view
+            el.setAttribute("readonly", "");
+            el.style = {
+                position: "absolute",
+                left: "-9999px"
+            };
+            document.body.appendChild(el);
+            // Select text inside element
+            el.select();
+            // Copy text to clipboard
+            document.execCommand("copy");
+            // Remove temporary element
+            document.body.removeChild(el);
+        }
+
+        function infoGramEncode() {
+            var jig = new Object();
+
+            var title = document.getElementById("Title").value;
+            var instructions = document.getElementById("Instructions").value;
+            var description = document.getElementById("Description").value;
+            var credit = document.getElementById("Credit").value;
+            var url = document.getElementById("URL").value;
+            var width = document.getElementById("Width").value;
+            var height = document.getElementById("Height").value;
+            var id = document.getElementById("id").value;
+            var js = document.getElementById("js").value;
+            var type = document.getElementById("type").value;
+
+            if (title != "") {
+                jig.title = title;
+            }
+            if (instructions != "") {
+                jig.instructions = instructions;
+            }
+            if (description != "") {
+                jig.description = description;
+            }
+            if (credit != "") {
+                jig.credit = credit;
+            }
+            if (url != "") {
+                jig.url = url;
+            }
+            if (width != "") {
+                jig.width = width;
+            }
+            if (height != "") {
+                jig.height = height;
+            }
+            if (id != "") {
+                jig.id = id;
+            }
+            if (js != "") {
+                jig.js = ggEncode(js);
+            }
+            if (type != "") {
+                jig.type = type;
+            }
+
+            output.value = igEncode(JSON.stringify(jig));
+            copyStringToClipboard(igEncode(JSON.stringify(jig)));
+        }
+
+        function infoGramDecode(infoGram) {
+            var jig = JSON.parse(igDecode(infoGram));
+
+            if (jig.title != null) {
+                document.getElementById("Title").value = jig.title;
+            }
+            if (jig.instructions != null) {
+                document.getElementById("Instructions").value = jig.instructions;
+            }
+            if (jig.description != null) {
+                document.getElementById("Description").value = jig.description;
+            }
+            if (!(jig.credit == "" || jig.credit == null)) {
+                document.getElementById("Credit").value = jig.credit;
+            }
+            if (jig.url != null) {
+                document.getElementById("URL").value = jig.url;
+            }
+            if (jig.width != null) {
+                document.getElementById("Width").value = jig.width;
+            }
+            if (jig.height != null) {
+                document.getElementById("Height").value = jig.height;
+            }
+            if (jig.id != null) {
+                document.getElementById("id").value = jig.id;
+            }
+            if (jig.js != null) {
+                document.getElementById("js").value = ggDecode(jig.js);
+            }
+            if (jig.type != null) {
+                document.getElementById("type").value = jig.type;
+            }
+
+        }
+
+        function gameGramDecode(gameGram) {
+            function flasher(url, width, height) {
+                document.getElementById("URL").value = url;
+                document.getElementById("Width").value = width + "px";
+                document.getElementById("Height").value = height + "px";
+                document.getElementById("type").value = "flash";
+            }
+
+            function framer(url, width, height) {
+                document.getElementById("URL").value = url;
+                document.getElementById("Width").value = width + "px";
+                document.getElementById("Height").value = height + "px";
+                document.getElementById("type").value = "frame";
+            }
+
+            function framerFull(url) {
+                document.getElementById("URL").value = url;
+                document.getElementById("type").value = "frameFull";
+            }
+
+            function scratch(id) {
+                document.getElementById("id").value = id;
+                document.getElementById("type").value = "scratch";
+            }
+
+            eval(ggDecode(gameGram));
+            document.getElementById("js").value = ggDecode(gameGram);
+        }
+    </script>
+</head>
+
+<body>
+
+    <label for="Title">Title:</label>
+    <textarea type="text" id="Title" width="300" style="width: 177px; height: 20px;" onchange="infoGramEncode()"></textarea><br />
+    <label for="Instructions">Instructions:</label>
+    <textarea type="text" id="Instructions" style="width: 450px; height: 320px;" onchange="infoGramEncode()"></textarea><br />
+    <label for="Description">Description:</label>
+    <textarea type="text" id="Description" style="width: 450px; height: 320px;" onchange="infoGramEncode()"></textarea><br />
+    <label for="Credit">Credit:</label>
+    <textarea type="text" id="Credit" style="width: 450px; height: 20px;" onchange="infoGramEncode()"></textarea><br />
+    <label for="URL">URL for flash, frames or ScratchEmbed:</label>
+    <textarea type="text" id="URL" width="450" style="width: 750px; height: 20px;" onchange="infoGramEncode()"></textarea><br />
+    <label for="Width">CSS Width(View <a href="https://w3schools.com/css/css_units.asp">here</a> for CSS units)</label>
+    <textarea type="text" id="Width" width="300" style="width: 177px; height: 20px;" onchange="infoGramEncode()"></textarea><br />
+    <label for="Height">CSS Height(View <a href="https://w3schools.com/css/css_units.asp">here</a> for CSS units)</label>
+    <textarea type="text" id="Height" style="width: 177px; height: 20px;" onchange="infoGramEncode()"></textarea><br />
+    <label for="id">ID for Scratch games:</label>
+    <textarea type="text" id="id" style="width: 450px; height: 20px;" onchange="infoGramEncode()"></textarea><br />
+    <label for="js">JS (Fallback/Easy embed):</label>
+    <textarea type="text" id="js" style="width: 850px; height: 20px;" onchange="infoGramEncode()"></textarea><br />
+    <label for="type">Game Type:</label>
+    <select id="type" onchange="infoGramEncode()">
+      <option value="flash">Flash</option>
+      <option value="frame">Frame</option>
+      <option value="frameFull">Frame Fullscreen</option>
+      <option value="scratch">Scratch</option>
+      <option value="scratchEmbed">ScratchEmbed</option>
+      <!--(Please Don't use)<option value="js">Plain JS</option>-->
+    </select><br />
+    <button onclick="infoGramEncode()">Encode</button><br /><br /><br />
+
+    <textarea id="output" style="right: 0px; top: 0px; width: 98vw; height: 150px;" readonly>Output</textarea><br><br><br>
+    <p>InfoGram Input: </p>
+    <textarea id="input" style="right: 0px; top: 0px; width: 98vw; height: 150px;" onchange="infoGramDecode(this.value)"></textarea><br><br><br>
+    <p>GameGram Input: </p>
+    <textarea id="gginput" style="right: 0px; top: 0px; width: 98vw; height: 150px;" onchange="gameGramDecode(this.value)"></textarea>
+</body>
+
+</html>

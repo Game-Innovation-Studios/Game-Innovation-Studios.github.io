@@ -1,63 +1,65 @@
 {
-  "name": "reInnovate Games",
-  "short_name": "reInnovate ",
-  "theme_color": "#2196f3",
-  "background_color": "#2196f3",
-  "display": "standalone",
-  "start_url": "index.html",
-  "scope": "https://game-innovation-studios.github.io/",
-  "icons": [
-    {
-      "src": "png/logo_72.png",
-      "sizes": "72x72",
-      "type": "image/png"
-    },
-    {
-      "src": "png/logo_96.png",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "png/logo_120.png",
-      "sizes": "120x120",
-      "type": "image/png"
-    },
-    {
-      "src": "png/logo_128.png",
-      "sizes": "128x128",
-      "type": "image/png"
-    },
-    {
-      "src": "png/logo_144.png",
-      "sizes": "144x144",
-      "type": "image/png"
-    },
-    {
-      "src": "png/logo_152.png",
-      "sizes": "152x152",
-      "type": "image/png"
-    },
-    {
-      "src": "png/logo_180.png",
-      "sizes": "180x180",
-      "type": "image/png"
-    },
-    {
-      "src": "png/logo_192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "png/logo_384.png",
-      "sizes": "384x384",
-      "type": "image/png"
-    },
-    {
-      "src": "png/logo_512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "theme_color": "#3399FF",
-  "background_color": "#3399FF"
+    "name": "reInnovate Games",
+    "short_name": "reInnovate ",
+    "theme_color": "#03a9f4 ",
+    "background_color": "#424242",
+    "display": "standalone",
+    "start_url": "index.html",
+    "scope": "https://game-innovation-studios.github.io/",
+    "icons": [{
+            "src": "png/logo_72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_120.png",
+            "sizes": "120x120",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_152.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_180.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "png/logo_1024.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }
+    ]
 }
