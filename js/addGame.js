@@ -39,11 +39,11 @@ function infoGramParse(infoGram) {
         var url = info.url;
         var width = info.width;
         var height = info.height;
-        game.innerHTML = '<iframe src="' + url + '" style="width: ' + width + '; height: ' + height + '; border: none; margin: 20px;">';
+        game.innerHTML = '<iframe src="' + url + '" style="width: ' + width + '; height: ' + height + '; border: none; margin: 20px;" sandbox>';
     } else if (gameType == "frameFull") {
         //Iframe
         var url = info.url;
-        game.innerHTML = '<iframe src="' + url + '" style="width: calc(100vw - 40px); height: calc(100vh - 104px); border: none; margin: 20px; margin-bottom: auto;">';
+        game.innerHTML = '<iframe src="' + url + '" style="width: calc(100vw - 40px); height: calc(100vh - 104px); border: none; margin: 20px; margin-bottom: auto;" sandbox>';
     } else if (gameType == "scratchEmbed") {
         //Scratch HTML Game
         var url = info.url;
