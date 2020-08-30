@@ -39,7 +39,7 @@ function infoGramParse(infoGram) {
         var url = info.url;
         var width = info.width;
         var height = info.height;
-        game.innerHTML = '<iframe src="' + url + '" style="width: ' + width + '; height: ' + height + '; border: none; margin: 20px;" sandbox>';
+        game.innerHTML = '<iframe src="' + url + '" style="width: ' + width + '; height: ' + height + '; border: none; margin: 20px;" sandbox="allow-forms allow-modals	allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-top-navigation-by-user-activation">';
     } else if (gameType == "frameFull") {
         //Iframe
         var url = info.url;
